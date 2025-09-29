@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order of Anubis - Role Request</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* background logo transparan */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url("assets/order-of-anubis-bg.png") no-repeat center;
+      background-size: 60%;
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      border-radius: 15px;
+      width: 95%;
+      max-width: 500px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    .requests {
+      margin-top: 2rem;
+    }
+
+    .request {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.8rem;
+      border-left: 5px solid #1e90ff;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* splash screen logo */
+    #splash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    #splash img {
+      width: 200px;
+      animation: fadeOut 1s ease 1s forwards;
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- splash screen -->
+  <div id="splash">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <div class="container">
+    <h1>Order of Anubis Role Request</h1>
+    <form id="roleForm">
+      <label for="name">Nama IC:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="steam">Steam Hax:</label>
+      <input type="text" id="steam" name="steam" required />
+
+      <label for="role">Pilih Role:</label>
+      <select id="role" name="role" required>
+        <option value="">-- Pilih Role --</option>
+        <option value="Peminpin Divisi">Peminpin Divisi</option>
+        <option value="Anggota">Anggota</option>
+      </select>
+
+      <label for="divisi">Divisi:</label>
+      <select id="divisi" name="divisi">
+        <option value="">-- Pilih Divisi --</option>
+        <option value="1">Divisi 1</option>
+        <option value="2">Divisi 2</option>
+        <option value="3">Divisi 3</option>
+      </select>
+
+      <button type="submit">Kirim Request</button>
+    </form>
+
+    <div class="requests" id="requests">
+      <h2>Daftar Request:</h2>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("roleForm");
+    const requests = document.getElementById("requests");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const steam = document.getElementById("steam").value;
+      const role = document.getElementById("role").value;
+      const divisi = document.getElementById("divisi").value;
+
+      const div = document.createElement("div");
+      div.classList.add("request");
+      div.innerHTML = `
+        <strong>${name}</strong> (${steam})<br/>
+        Role: ${role}${role === "Peminpin Divisi" ? " - Divisi " + divisi : ""}
+      `;
+
+      requests.appendChild(div);
+      form.reset();
+    });
+
+    // Hapus splash screen setelah 2 detik
+    setTimeout(() => {
+      document.getElementById("splash").style.display = "none";
+    }, 2000);
+  </script>
+</body>
+</html>
